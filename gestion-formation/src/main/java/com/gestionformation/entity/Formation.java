@@ -39,11 +39,11 @@ public class Formation {
     @JoinColumn(name = "idFormateur")
     private Formateur formateur;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "formation_participant",
-            joinColumns = @JoinColumn(name = "idFormation"),
-            inverseJoinColumns = @JoinColumn(name = "idParticipant")
+            joinColumns = @JoinColumn(name = "id_formation"),
+            inverseJoinColumns = @JoinColumn(name = "id_participant")
     )
     private List<Participant> participants = new ArrayList<>();
 }
