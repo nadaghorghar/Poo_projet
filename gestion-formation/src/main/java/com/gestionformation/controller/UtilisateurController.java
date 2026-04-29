@@ -7,15 +7,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/utilisateurs")
 @RequiredArgsConstructor
 public class UtilisateurController {
+
     private final UtilisateurService utilisateurService;
 
     @GetMapping
-    public List<Utilisateur> getAll() { return utilisateurService.findAll(); }
+    public List<Utilisateur> getAll() {
+        return utilisateurService.findAll();
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<Utilisateur> getById(@PathVariable Integer id) {
@@ -28,7 +32,9 @@ public class UtilisateurController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Utilisateur> update(@PathVariable Integer id, @Valid @RequestBody Utilisateur utilisateur) {
+    public ResponseEntity<Utilisateur> update(
+            @PathVariable Integer id,
+            @RequestBody Utilisateur utilisateur) {
         return ResponseEntity.ok(utilisateurService.update(id, utilisateur));
     }
 
