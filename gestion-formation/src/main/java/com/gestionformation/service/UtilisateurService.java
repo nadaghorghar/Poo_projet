@@ -10,14 +10,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UtilisateurService {
+
     private final UtilisateurRepository utilisateurRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public List<Utilisateur> findAll() { return utilisateurRepository.findAll(); }
-    public Utilisateur findById(Integer id) { return utilisateurRepository.findById(id).orElseThrow(); }
+    public List<Utilisateur> findAll() {
+        return utilisateurRepository.findAll();
+    }
+
+    public Utilisateur findById(Integer id) {
+        return utilisateurRepository.findById(id).orElseThrow();
+    }
 
     public Utilisateur save(Utilisateur u) {
-        // Always hash the password before saving
         u.setPassword(passwordEncoder.encode(u.getPassword()));
         return utilisateurRepository.save(u);
     }
@@ -26,12 +31,13 @@ public class UtilisateurService {
         Utilisateur existing = findById(id);
         existing.setLogin(u.getLogin());
         existing.setRole(u.getRole());
-        // Only re-hash if the password field was actually changed
         if (u.getPassword() != null && !u.getPassword().isBlank()) {
             existing.setPassword(passwordEncoder.encode(u.getPassword()));
         }
         return utilisateurRepository.save(existing);
     }
 
-    public void delete(Integer id) { utilisateurRepository.deleteById(id); }
+    public void delete(Integer id) {
+        utilisateurRepository.deleteById(id);
+    }
 }
